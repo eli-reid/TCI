@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Twitch Chat Interface &#8212; Twitch Chat Interface .0.1 alpha documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Message Handler" href="MessageHandler.html" />
+    <link rel="prev" title="Welcome to Twitch Chat Interface’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Twitch Chat Interface .0.1 alpha documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="Welcome to Twitch Chat Interface’s documentation!"
+             accesskey="P">previous</a> |
+          <a href="MessageHandler.html" title="Message Handler"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-TwitchChatInterface">
+<span id="twitch-chat-interface"></span><h1>Twitch Chat Interface<a class="headerlink" href="#module-TwitchChatInterface" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="TwitchChatInterface.TwitchChatInterface">
+<em class="property">class </em><code class="sig-prename descclassname">TwitchChatInterface.</code><code class="sig-name descname">TwitchChatInterface</code><span class="sig-paren">(</span><em class="sig-param">settings: dict</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bulids connection, receives chat messages from server and emits corrisponding events!</p>
+<p>This library closely follows twitch docs <a class="reference external" href="https://dev.twitch.tv/docs/irc">https://dev.twitch.tv/docs/irc</a></p>
+<p>All functions or methods used as event callbacks need to have 2 input varibles</p>
+<p>Example of how to use this</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">TwitchChatInterface</span>
+    
+<span class="n">settings</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;server&quot;</span><span class="p">:</span> <span class="s2">&quot;irc.chat.twitch.tv&quot;</span><span class="p">,</span> <span class="c1"># the server address</span>
+            <span class="s2">&quot;port&quot;</span> <span class="p">:</span> <span class="mi">6667</span><span class="p">,</span>  <span class="c1">#server port as interger</span>
+            <span class="s2">&quot;user&quot;</span> <span class="p">:</span> <span class="s2">&quot;mybotsname&quot;</span><span class="p">,</span> <span class="c1"># you bots username</span>
+            <span class="s2">&quot;password&quot;</span> <span class="p">:</span> <span class="s2">&quot;oauth: &quot;</span><span class="p">,</span> <span class="c1"># password as twitch oauth</span>
+            <span class="s2">&quot;channels&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;channel1&quot;</span><span class="p">,</span><span class="s2">&quot;channel2&quot;</span><span class="p">],</span> <span class="c1"># replace with any channels yopu want the bot join</span>
+            <span class="s2">&quot;caprequest&quot;</span> <span class="p">:</span> <span class="s2">&quot;twitch.tv/tags twitch.tv/commands twitch.tv/membership&quot;</span> 
+            <span class="p">}</span>
+<span class="c1"># All functions or methods used as event callbacks need to have 2 input varibles </span>
+<span class="c1">#   sender: is what triggered event </span>
+<span class="c1">#   message: is the message</span>
+
+<span class="k">def</span> <span class="nf">handleMessage</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{message.channel}</span><span class="s2">] </span><span class="si">{message.username}</span><span class="s2">: </span><span class="si">{message.text}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">handleConnect</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;connected!&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># setup server instance with settings as dict</span>
+    <span class="n">twitchChat</span> <span class="o">=</span> <span class="n">TwitchChatInterface</span><span class="o">.</span><span class="n">TwitchChatInterface</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+    <span class="c1"># add function or method for a message event </span>
+    <span class="n">twitchChat</span><span class="o">.</span><span class="n">onMessage</span><span class="p">(</span><span class="n">handleMessage</span><span class="p">)</span>
+
+    <span class="c1"># add function or method for a server connected event </span>
+    <span class="n">twitchChat</span><span class="o">.</span><span class="n">onConnected</span><span class="p">(</span><span class="n">handleConnect</span><span class="p">)</span>
+
+    <span class="c1"># this starts the server and logins </span>
+    <span class="n">twitchChat</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># send a messaage to a channel</span>
+    <span class="n">twitchChat</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="s2">&quot;channel1&quot;</span><span class="p">,</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is the message object that is sent with event 1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
+    <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the raw unparsed message string from server</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the channel the message is from</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># id of message</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># there is 3 types of prfixes</span>
+    <span class="n">command</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the is the command which is also the event name</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the context of the message</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the person who has sent the message</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="c1"># this is a break down of the end of message</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Dict</span> <span class="c1"># these are twitch tags look</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._emptyMsgQ">
+<code class="sig-name descname">_emptyMsgQ</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._emptyMsgQ" title="Permalink to this definition">¶</a></dt>
+<dd><p>TwitchChatInterface._emptyMsgQ [summary]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._getMsgs">
+<code class="sig-name descname">_getMsgs</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._getMsgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>TwitchChatInterface._getMsgs [summary]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._onConnected">
+<code class="sig-name descname">_onConnected</code><span class="sig-paren">(</span><em class="sig-param">sender: object</em>, <em class="sig-param">message</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._onConnected" title="Permalink to this definition">¶</a></dt>
+<dd><p>TwitchChatInterface._onConnected - event callback function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>object</em>) – what is reasponsible for event</p></li>
+<li><p><strong>message</strong> (<a class="reference internal" href="MessageHandler.html#MessageHandler.Message" title="MessageHandler.Message"><em>Message</em></a>) – irc message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._onNotice">
+<code class="sig-name descname">_onNotice</code><span class="sig-paren">(</span><em class="sig-param">sender: object</em>, <em class="sig-param">message</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._onNotice" title="Permalink to this definition">¶</a></dt>
+<dd><p>_onNotice [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>object</em>) – what is reasponsible for event</p></li>
+<li><p><strong>message</strong> (<a class="reference internal" href="MessageHandler.html#MessageHandler.Message" title="MessageHandler.Message"><em>Message</em></a>) – irc message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._onRoomState">
+<code class="sig-name descname">_onRoomState</code><span class="sig-paren">(</span><em class="sig-param">sender: object</em>, <em class="sig-param">message</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._onRoomState" title="Permalink to this definition">¶</a></dt>
+<dd><p>_onRoomState [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>object</em>) – what is reasponsible for event</p></li>
+<li><p><strong>message</strong> (<a class="reference internal" href="MessageHandler.html#MessageHandler.Message" title="MessageHandler.Message"><em>Message</em></a>) – irc message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._setChannelMods">
+<code class="sig-name descname">_setChannelMods</code><span class="sig-paren">(</span><em class="sig-param">sender: object</em>, <em class="sig-param">message</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._setChannelMods" title="Permalink to this definition">¶</a></dt>
+<dd><p>_setChannelMods [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>object</em>) – [description]</p></li>
+<li><p><strong>message</strong> (<a class="reference internal" href="MessageHandler.html#MessageHandler.Message" title="MessageHandler.Message"><em>Message</em></a>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._setRoomState">
+<code class="sig-name descname">_setRoomState</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">tags: dict</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._setRoomState" title="Permalink to this definition">¶</a></dt>
+<dd><p>_setRoomState [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>tags</strong> (<em>list</em>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface._updateRoomState">
+<code class="sig-name descname">_updateRoomState</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">tags: dict</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface._updateRoomState" title="Permalink to this definition">¶</a></dt>
+<dd><p>_updateRoomState [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>tags</strong> (<em>dict</em>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.getMods">
+<code class="sig-name descname">getMods</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.getMods" title="Permalink to this definition">¶</a></dt>
+<dd><p>getMods [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>channel</strong> (<em>str</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.join">
+<code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="sig-param">channels: list</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>join [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>channels</strong> (<em>list</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.onConnected">
+<code class="sig-name descname">onConnected</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.onConnected" title="Permalink to this definition">¶</a></dt>
+<dd><p>onConnected[summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.onMessage">
+<code class="sig-name descname">onMessage</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.onMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>onMessage [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.onMsgId">
+<code class="sig-name descname">onMsgId</code><span class="sig-paren">(</span><em class="sig-param">msgid</em>, <em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.onMsgId" title="Permalink to this definition">¶</a></dt>
+<dd><p>onMsgId [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msgid</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
+<li><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.onNotice">
+<code class="sig-name descname">onNotice</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.onNotice" title="Permalink to this definition">¶</a></dt>
+<dd><p>onNotice [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.onReceived">
+<code class="sig-name descname">onReceived</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.onReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>onReceived [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.onRoomState">
+<code class="sig-name descname">onRoomState</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.onRoomState" title="Permalink to this definition">¶</a></dt>
+<dd><p>onRoomState [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.onWhisper">
+<code class="sig-name descname">onWhisper</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.onWhisper" title="Permalink to this definition">¶</a></dt>
+<dd><p>onWhisper [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.sendMessage">
+<code class="sig-name descname">sendMessage</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">message: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.sendMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>sendMessage [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.sendWhisper">
+<code class="sig-name descname">sendWhisper</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">username: str</em>, <em class="sig-param">message: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.sendWhisper" title="Permalink to this definition">¶</a></dt>
+<dd><p>sendWhisper [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>TwitchChatInterface.start - connects to server, logins in and starts send and recieve threads</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TwitchChatInterface.TwitchChatInterface.timeoutUser">
+<code class="sig-name descname">timeoutUser</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">username: str</em>, <em class="sig-param">duration: int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TwitchChatInterface.timeoutUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>timeoutUser [summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>duration</strong> (<em>int</em>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Twitch Chat Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MessageHandler.html">Message Handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="IrcController.html">IRC Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EventHandler.html">Event Handler</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="Welcome to Twitch Chat Interface’s documentation!"
+              >previous</a> |
+            <a href="MessageHandler.html" title="Message Handler"
+              >next</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/TwitchChatInterface.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Eli Reid.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

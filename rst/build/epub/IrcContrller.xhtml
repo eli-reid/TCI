@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+    <meta charset="utf-8" />
+    <title>IRC Controller</title>
+    <link rel="stylesheet" href="_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> 
+  </head><body>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-IrcController">
+<span id="irc-controller"></span><h1>IRC Controller</h1>
+<p>IRC Conroller</p>
+<dl class="class">
+<dt id="IrcController.IrcController">
+<em class="property">class </em><code class="sig-prename descclassname">IrcController.</code><code class="sig-name descname">IrcController</code><span class="sig-paren">(</span><em class="sig-param">server: str</em>, <em class="sig-param">port: int</em>, <em class="sig-param">pingwait: int = 300</em><span class="sig-paren">)</span></dt>
+<dd><p>IRC Conroller</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>str</em>) – address to IRC server</p></li>
+<li><p><strong>port</strong> (<em>int</em>) – IRC server port</p></li>
+<li><p><strong>pingwait</strong> – keep alive delay</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="IrcController.IrcController.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None</dt>
+<dd><p>IrcController.connect - Creates new socket &amp; Opens connection to IRC server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IrcController.IrcController.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><em class="sig-param">reason=''</em><span class="sig-paren">)</span> &#x2192; None</dt>
+<dd><p>IrcController.disconnect - Closes sockets &amp; Disconects from IRC server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>reason</strong> (<em>str</em><em> or </em><em>errorType</em>) – reason for socket disconnect</p>
+</dd>
+<dt class="field-even">Default reason</dt>
+<dd class="field-even"><p>“”</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IrcController.IrcController.isConnected">
+<code class="sig-name descname">isConnected</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool</dt>
+<dd><p>IrcController.isConnected - Gets status of server connection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self._connected</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IrcController.IrcController.receive">
+<code class="sig-name descname">receive</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str</dt>
+<dd><p>IrcController.receive - Receives all data from socket buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>All available data from socket buffer, if none is available returns None</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IrcController.IrcController.send">
+<code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param">data: str</em><span class="sig-paren">)</span> &#x2192; None</dt>
+<dd><p>IrcController.send - sends to server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>str</em>) – string to be sent to IRC server</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>
