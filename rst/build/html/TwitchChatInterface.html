@@ -87,7 +87,7 @@
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>This is the message object that is sent with event 1</p>
+<p>This is the message object that is sent with event</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
     <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the raw unparsed message string from server</span>
     <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the channel the message is from</span>
@@ -103,10 +103,10 @@
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.join">
 <code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="sig-param">channels: list</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.join" title="Permalink to this definition">¶</a></dt>
-<dd><p>join [summary]</p>
+<dd><p>join - jions channels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>channels</strong> (<em>list</em>) – [description]</p>
+<dd class="field-odd"><p><strong>channels</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – list of channel names</p>
 </dd>
 </dl>
 </dd></dl>
@@ -191,10 +191,11 @@
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.onMessage">
 <code class="sig-name descname">onMessage</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.onMessage" title="Permalink to this definition">¶</a></dt>
-<dd><p>onMessage [summary]</p>
+<dd><p>onMessage - message event - adds callback function for event
+event object is of type class Message</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>func</strong> – [description]</p>
+<dd class="field-odd"><p><strong>func</strong> (<em>a function</em><em> or </em><em>method</em>) – The function to call on this event</p>
 </dd>
 </dl>
 </dd></dl>
@@ -202,12 +203,13 @@
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.onMsgId">
 <code class="sig-name descname">onMsgId</code><span class="sig-paren">(</span><em class="sig-param">msgid</em>, <em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TCI.onMsgId" title="Permalink to this definition">¶</a></dt>
-<dd><p>onMsgId [summary]</p>
+<dd><p>onMsgId  - msgid events - adds callback to a given msgid
+event object is of type class Message</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msgid</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
-<li><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
+<li><p><strong>msgid</strong> (<em>str</em>) – </p></li>
+<li><p><strong>func</strong> (<em>a function</em><em> or </em><em>method</em>) – The function to call on this event</p></li>
 </ul>
 </dd>
 </dl>
@@ -315,10 +317,11 @@
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.onWhisper">
 <code class="sig-name descname">onWhisper</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TCI.onWhisper" title="Permalink to this definition">¶</a></dt>
-<dd><p>onWhisper [summary]</p>
+<dd><p>onWhisper - Whisper event - adds callback function for event
+event object is of type class Message</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>func</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+<dd class="field-odd"><p><strong>func</strong> (<em>a function</em><em> or </em><em>method</em>) – The function to call on this event</p>
 </dd>
 </dl>
 </dd></dl>
@@ -326,23 +329,23 @@
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.part">
 <code class="sig-name descname">part</code><span class="sig-paren">(</span><em class="sig-param">channels: list</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TCI.part" title="Permalink to this definition">¶</a></dt>
-<dd><p>[summary]</p>
+<dd><p>part - Leaves channel</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>channels</strong> (<em>list</em>) – [description]</p>
+<dd class="field-odd"><p><strong>channels</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – list of channel names</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.sendMessage">
-<code class="sig-name descname">sendMessage</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">message: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.sendMessage" title="Permalink to this definition">¶</a></dt>
-<dd><p>sendMessage [summary]</p>
+<code class="sig-name descname">sendMessage</code><span class="sig-paren">(</span><em class="sig-param">channelName: str</em>, <em class="sig-param">messageString: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.sendMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>sendMessage - sends a message to channel</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>channelName</strong> (<em>str</em>) – Name of channel to send message</p></li>
+<li><p><strong>messageString</strong> (<em>str</em>) – message to send</p></li>
 </ul>
 </dd>
 </dl>
@@ -350,14 +353,16 @@
 
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.sendWhisper">
-<code class="sig-name descname">sendWhisper</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">username: str</em>, <em class="sig-param">message: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.sendWhisper" title="Permalink to this definition">¶</a></dt>
-<dd><p>sendWhisper [summary]</p>
+<code class="sig-name descname">sendWhisper</code><span class="sig-paren">(</span><em class="sig-param">channelName: str</em>, <em class="sig-param">username: str</em>, <em class="sig-param">messageString: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.sendWhisper" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>sendWhisper - sends whisper to user in chat</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – [description]</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – [description]</p></li>
+<li><p><strong>channelName</strong> (<em>str</em>) – Name of channel to send message</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Username to whisper</p></li>
+<li><p><strong>messageString</strong> (<em>str</em>) – message to send</p></li>
 </ul>
 </dd>
 </dl>
@@ -371,14 +376,14 @@
 
 <dl class="method">
 <dt id="TwitchChatInterface.TCI.timeoutUser">
-<code class="sig-name descname">timeoutUser</code><span class="sig-paren">(</span><em class="sig-param">channel: str</em>, <em class="sig-param">username: str</em>, <em class="sig-param">duration: int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.timeoutUser" title="Permalink to this definition">¶</a></dt>
-<dd><p>timeoutUser [summary]</p>
+<code class="sig-name descname">timeoutUser</code><span class="sig-paren">(</span><em class="sig-param">channelName: str</em>, <em class="sig-param">username: str</em>, <em class="sig-param">duration: int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.timeoutUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>timeoutUser - times user in channel</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>channel</strong> (<em>str</em>) – [description]</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – [description]</p></li>
-<li><p><strong>duration</strong> (<em>int</em>) – [description]</p></li>
+<li><p><strong>channelName</strong> – name of channel</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – username of person</p></li>
+<li><p><strong>duration</strong> (<em>int</em>) – how long to timeout</p></li>
 </ul>
 </dd>
 </dl>
