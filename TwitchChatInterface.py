@@ -320,10 +320,10 @@ class TCI(object):
 
     def join(self, channels: list)->None:
         """
-        join [summary]
+        join - jions channels
         
-        :param channels: [description]
-        :type channels: list
+        :param channels: list of channel names
+        :type channels: list[str]
         """
         for channel in channels:
             channel = self._formatChannelName(channel)
@@ -331,68 +331,71 @@ class TCI(object):
             self._sendQ.put(f"JOIN {channel}" if '#' in channel else f"JOIN #{channel}")
     
     def part(self, channels: list):
-        """[summary]
+        """ 
+        part - Leaves channel
         
-        :param channels: [description]
-        :type channels: list
+        :param channels: list of channel names
+        :type channels: list[str]
         """
         for channel in channels:
             channel = self._formatChannelName(channel)
             self._removeChannel(channel)
             self._sendQ.put(f"PART {channel}" if '#' in channel else f"PART#{channel}")
 
-    def sendMessage(self, channel: str, message: str)->None:
+    def sendMessage(self, channelName: str, messageString: str)->None:
         """
-        sendMessage [summary]
+        sendMessage - sends a message to channel
         
-        :param channel: [description]
-        :type channel: str
-        :param message: [description]
-        :type message: str
+        :param channelName: Name of channel to send message
+        :type channelName: str
+        :param messageString: message to send
+        :type messageString: str
         """
-        self._sendQ.put(f"PRIVMSG {'#' if '#' not in channel else ''}{channel} :{message}")
+        self._sendQ.put(f"PRIVMSG {'#' if '#' not in channelName else ''}{channelName} :{messageString}")
 
-    def sendWhisper(self, channel: str, username: str, message: str)->None:
+    def sendWhisper(self, channelName: str, username: str, messageString: str)->None:
         """
-        sendWhisper [summary]
+         sendWhisper - sends whisper to user in chat
         
-        :param channel: [description]
-        :type channel: str
-        :param username: [description]
+        :param channelName: Name of channel to send message
+        :type channelName: str
+        :param username: Username to whisper
         :type username: str
-        :param message: [description]
-        :type message: str
+        :param messageString: message to send
+        :type messageString: str
         """
-        self._sendQ.put(f"PRIVMSG {'#' if '#' not in channel else ''}{channel} :/w {username} {message}")
+        self._sendQ.put(f"PRIVMSG {'#' if '#' not in channelName else ''}{channelName} :/w {username} {messageString}")
 
-    def timeoutUser(self, channel: str, username: str, duration: int)->None:
+    def timeoutUser(self, channelName: str, username: str, duration: int)->None:
         """
-        timeoutUser [summary]
+        timeoutUser - times user in channel
         
-        :param channel: [description]
+        :param channelName: name of channel
         :type channel: str
-        :param username: [description]
+        :param username:  username of person 
         :type username: str
-        :param duration: [description]
+        :param duration: how long to timeout
         :type duration: int
         """
-        self._sendQ.put(f"PRIVMSG #{'#' if '#' not in channel else ''}{channel} :/timeout {username} {duration}")
+        self._sendQ.put(f"PRIVMSG #{'#' if '#' not in channelName else ''}{channelName} :/timeout {username} {duration}")
    
     def onMessage(self, func)->None:
         """
-        onMessage [summary]
+        onMessage - message event - adds callback function for event 
+        event object is of type class Message
         
-        :param func: [description]
-        :type func: 
+        :param func: The function to call on this event 
+        :type func: a function or method
         """
         self.event.on(self.COMMANDS.MESSAGE, func)
     
     def onWhisper(self, func):
         """
-        onWhisper [summary]
+        onWhisper - Whisper event - adds callback function for event 
+        event object is of type class Message
         
-        :param func: [description]
-        :type func: [type]
+        :param func: The function to call on this event 
+        :type func: a function or method
         """
         self.event.on(self.COMMANDS.WHISPER, func)
 
@@ -407,14 +410,16 @@ class TCI(object):
 
     def onMsgId(self, msgid, func):
         """
-        onMsgId [summary]
+        onMsgId  - msgid events - adds callback to a given msgid
+        event object is of type class Message
         
-        :param msgid: [description]
-        :type msgid: [type]
-        :param func: [description]
-        :type func: [type]
+        :param msgid: .. _a link: https://dev.twitch.tv/docs/irc/msg-id also located in ``TCI.COMMANDS.MESSAGEIDS``
+        :type msgid: str
+        :param func: The function to call on this event 
+        :type func: a function or method
         """
         self.event.on(msgid, func)
+        
     
     def onNotice(self, func):
         """
