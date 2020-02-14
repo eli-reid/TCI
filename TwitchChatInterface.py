@@ -20,6 +20,8 @@ class TCI(object):
 
         This is the message object that is sent with event 
 
+        .. _Message:
+
         .. code-block::
         
             class Message:
@@ -32,6 +34,34 @@ class TCI(object):
                 username: str # the person who has sent the message
                 params: List[str] # this is a break down of the end of message 
                 tags: Dict # these are twitch tags look 
+        
+        .. code-block::
+        
+            class Channel:
+                name: str 
+                roomID: str   
+                mods: list 
+                roomState: RoomState = RoomState()
+                userState: UserState = UserState()
+            
+            class RoomState:
+                emote_only: int 
+                rituals: int 
+                followers_only: int 
+                r9k: int 
+                slow: int  
+                subs_only: int 
+
+            class UserState:
+                badge_info: str
+                badges: dict 
+                color: str 
+                display_name: str
+                emote_sets: str
+                turbo: str
+                user_id: str
+                user_type: str
+
     """
     def __init__(self,settings: dict):
       
@@ -67,6 +97,8 @@ class TCI(object):
     def start(self)->None:
         """
         TwitchChatInterface.start - connects to server, logins in and starts send and recieve threads 
+
+        
         
         """
         self._server.connect()
@@ -77,6 +109,7 @@ class TCI(object):
     def _getMsgs(self)->None:
         """
         TwitchChatInterface._getMsgs [summary]
+
         """
         data=""
         while self._server.isConnected():
@@ -382,7 +415,7 @@ class TCI(object):
     def onMessage(self, func)->None:
         """
         onMessage - message event - adds callback function for event 
-        event object is of type class Message
+        event object is of type class Message_
         
         :param func: The function to call on this event 
         :type func: a function or method
@@ -392,7 +425,7 @@ class TCI(object):
     def onWhisper(self, func):
         """
         onWhisper - Whisper event - adds callback function for event 
-        event object is of type class Message
+        event object is of type class Message_
         
         :param func: The function to call on this event 
         :type func: a function or method
@@ -413,7 +446,7 @@ class TCI(object):
         onMsgId  - msgid events - adds callback to a given msgid
         event object is of type class Message
         
-        :param msgid: .. _a link: https://dev.twitch.tv/docs/irc/msg-id also located in ``TCI.COMMANDS.MESSAGEIDS``
+        :param msgid: https://dev.twitch.tv/docs/irc/msg-id or **TCI.COMMANDS.MESSAGEIDS**
         :type msgid: str
         :param func: The function to call on this event 
         :type func: a function or method

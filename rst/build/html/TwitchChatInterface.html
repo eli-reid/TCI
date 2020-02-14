@@ -88,7 +88,7 @@
 </pre></div>
 </div>
 <p>This is the message object that is sent with event</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
+<div class="highlight-default notranslate" id="message"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
     <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the raw unparsed message string from server</span>
     <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the channel the message is from</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># id of message</span>
@@ -98,6 +98,32 @@
     <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># the person who has sent the message</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="c1"># this is a break down of the end of message</span>
     <span class="n">tags</span><span class="p">:</span> <span class="n">Dict</span> <span class="c1"># these are twitch tags look</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Channel</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">roomID</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">mods</span><span class="p">:</span> <span class="nb">list</span>
+    <span class="n">roomState</span><span class="p">:</span> <span class="n">RoomState</span> <span class="o">=</span> <span class="n">RoomState</span><span class="p">()</span>
+    <span class="n">userState</span><span class="p">:</span> <span class="n">UserState</span> <span class="o">=</span> <span class="n">UserState</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">RoomState</span><span class="p">:</span>
+    <span class="n">emote_only</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">rituals</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">followers_only</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">r9k</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">slow</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">subs_only</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="k">class</span> <span class="nc">UserState</span><span class="p">:</span>
+    <span class="n">badge_info</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">badges</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">emote_sets</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">turbo</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">user_type</span><span class="p">:</span> <span class="nb">str</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -192,7 +218,7 @@
 <dt id="TwitchChatInterface.TCI.onMessage">
 <code class="sig-name descname">onMessage</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#TwitchChatInterface.TCI.onMessage" title="Permalink to this definition">¶</a></dt>
 <dd><p>onMessage - message event - adds callback function for event
-event object is of type class Message</p>
+event object is of type class <a class="reference internal" href="#message">Message</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>func</strong> (<em>a function</em><em> or </em><em>method</em>) – The function to call on this event</p>
@@ -208,7 +234,7 @@ event object is of type class Message</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msgid</strong> (<em>str</em>) – </p></li>
+<li><p><strong>msgid</strong> (<em>str</em>) – <a class="reference external" href="https://dev.twitch.tv/docs/irc/msg-id">https://dev.twitch.tv/docs/irc/msg-id</a> or <strong>TCI.COMMANDS.MESSAGEIDS</strong></p></li>
 <li><p><strong>func</strong> (<em>a function</em><em> or </em><em>method</em>) – The function to call on this event</p></li>
 </ul>
 </dd>
@@ -318,7 +344,7 @@ event object is of type class Message</p>
 <dt id="TwitchChatInterface.TCI.onWhisper">
 <code class="sig-name descname">onWhisper</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#TwitchChatInterface.TCI.onWhisper" title="Permalink to this definition">¶</a></dt>
 <dd><p>onWhisper - Whisper event - adds callback function for event
-event object is of type class Message</p>
+event object is of type class <a class="reference internal" href="#message">Message</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>func</strong> (<em>a function</em><em> or </em><em>method</em>) – The function to call on this event</p>
